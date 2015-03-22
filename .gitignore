@@ -5,3 +5,4 @@ videoAnnotation/data/KT-video-mp4/*
 videoAnnotation/data/labels-needle-bbox-session/*
 
 videoAnnotation/jhu alias
+*.m~
