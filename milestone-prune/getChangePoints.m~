@@ -1,0 +1,6 @@
+function [ output_args ] = getChangePoints( trial, feature_grid )
+[n p
+
+
+end
+
