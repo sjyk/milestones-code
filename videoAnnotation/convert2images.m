@@ -4,7 +4,9 @@ function [] = convert2images()
 workingDir = '.';
 % dataDir = ['..' filesep 'data' filesep ];
 dataDir = ['data' ];
-videoDir = 'video-mp4';
+videoDir = 'SU-video-mp4';
+% videoDir = 'NP-video-mp4';
+% videoDir = 'KT-video-mp4';
 targetFramerate = 1; %frames per second
 
 % mkdir(workingDir)
