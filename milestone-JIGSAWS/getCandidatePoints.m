@@ -88,6 +88,6 @@ hold on;
 scatter(changepoints(:,2),changepoints(:,3),'rx')
 
 %show milestones
-[k c] = kmeans(changepoints(:,2:4),6);
-scatter(c(:,1),changepoints(:,3),'rx')
+[k c] = kmeans(changepoints(:,2:4),6,'Start','cluster','Replicates',50);
+scatter(c(:,1),c(:,2),'ko','filled')
 

@@ -1,5 +1,8 @@
 videoAnnotation/data/images/*
-videoAnnotation/data/video-mp4/*
+videoAnnotation/data/SU-video-mp4/*
+videoAnnotation/data/NP-video-mp4/*
+videoAnnotation/data/KT-video-mp4/*
 videoAnnotation/data/labels-needle-bbox-session/*
-
+data/SU-kinematics/*
 videoAnnotation/jhu alias
+*.m~

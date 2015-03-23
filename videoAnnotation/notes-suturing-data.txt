@@ -1,0 +1,15 @@
+Suturing
+The are in the following format: 
+Name, <t at goin in the i'th suture>, <time at coming out of i'th suture>,....
+There are 4 sutures in total
+
+Notes
+Surgeon 'G' and "I' are rather novices, (G is very bad one). They fail often. 
+It may be a good example to show return to last known good state and restart strategy sued by humans in general
+G001 -very bad example, temporally elongated. may be leave out in training.
+G003 also a bad example
+
+1. perhaps use the relative time taken for suture to go in and come out instead of absolute times!
+similaly with positions.
+
+2. I think we might need some transformation of the data to allow temporal variations. They seem to vary a lot between users and even between trails of same users. (Ex. G001, G002). But one thing that is consistent is based on the skill the time taken for a user to push in the needle and pull it out. 

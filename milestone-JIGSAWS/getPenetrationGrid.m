@@ -14,7 +14,8 @@ prior_ptimes = ptimes(find(ptimes <= time_index));
 pen_locations = trial(prior_ptimes,:)*scale;
 [locs d] = size(pen_locations);
 for i=1:1:locs
-    grid(abs(round(pen_locations(i,1)))+1,abs(round(pen_locations(i,2)))+1) = max(abs(trial(i,3)-threshold_depth);
+    grid(abs(round(pen_locations(i,1)))+1,abs(round(pen_locations(i,2)))+1) = max(abs(trial(i,3)-threshold_depth),...
+    grid(abs(round(pen_locations(i,1)))+1,abs(round(pen_locations(i,2)))+1));
 end
 
 end
