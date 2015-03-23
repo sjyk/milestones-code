@@ -10,7 +10,7 @@ function features = getFeatures(inputFileName, varargin )
     
 if nargin>5
     fprintf ('If interpolate turned on, must supply targetFramerate \n')
-    fprintf('Usage: input: [inputFileName, originalFramerate, interpolate (binary), targetFramerate (only if interpolate)]\n')
+    fprintf('Usage: input: [inputFileName, outputFileName, originalFramerate, interpolate (binary), targetFramerate (only if interpolate)]\n')
     return
 
 elseif nargin==5
@@ -23,12 +23,13 @@ elseif nargin==5
 elseif nargin ==4
     outputFileName = varargin{1};
     outputFlag = 1;
+    fprintf ('Setting originalFramerate as 30\n')
     interpolate = varargin{2};
     targetFramerate = varargin{3};
     originalFramerate = 30;
     
 elseif nargin ==3
-    fprintf ('Second argunment interpreted as originalFramerate (>0)\n')
+    fprintf ('Third argunment interpreted as originalFramerate (>0)\n')
     outputFileName = varargin{1};
     outputFlag = 1;
     originalFramerate = varargin{2};
@@ -82,13 +83,13 @@ bbox = cell2mat(dataCell(:,2));
 features = [];
 %% interpolate if required
 if interpolate        
-    currRate = t(2)-t(1);%sampling with interveaved frames
+    currRate = t(2)-t(1);%sampling with interleaved frames
     dataSamplingRate = floor(originalFramerate/currRate);
     if dataSamplingRate <1
         fprintf('it seems the current sampling rate is more than ...original frame rate!! (not possible)\n')
         return
     end
-    % Preferred dataSamplingRate :{1, 2,4,6,..} otherwise there would be
+    % Preferred dataSamplingRate:{1, 2,4,6,..} otherwise there would be
     % many boundary conditions to be handled for conversion to
     % targetFrameRate
     samplingRate = targetFramerate/dataSamplingRate;
@@ -124,8 +125,13 @@ if interpolate
     
 else
     features = [(t./originalFramerate)', bbox];
-
 end
+
+%get puncture times if suturing
+if ~isempty(strfind(inputFileName, 'suturing'))
+    features= addPunctureTime (inputFileName, features, originalFramerate);
+end
+
 % save the features as mat file
 if outputFlag && ~isnan(outputFileName(1)) 
     save (outputFileName, 'features');
@@ -147,4 +153,32 @@ function [xx,yy]=fillline(startp,endp,pts)
             xx=linspace(startp(1),endp(1),pts);
             yy=m*(xx-startp(1))+startp(2);
         end
+end
+
+function [features] = addPunctureTime (inputFile, features, targetFramerate)
+    % Read the csv file for times
+    timesFile= 'data/suturing-times.csv';
+    endRow = 39;%no of trials
+    formatSpec = '%s%f%f%f%f%f%f%f%f%[^\n\r]';
+
+    fileID = fopen(timesFile,'r');
+    dataArray = textscan(fileID, formatSpec, endRow, 'Delimiter', ',', 'ReturnOnError', false);
+    fclose(fileID);
+
+    namedTrials = dataArray{:, 1};
+    onlyFileName = strsplit(inputFile,'/');
+    onlyFileName = strsplit(onlyFileName{end} ,'.');
+    trialID = find(strcmpi (onlyFileName{1}, namedTrials ),1); %should exactly be one value
+    
+    puncture_times = dataArray(:, 2:9);
+    puncture_times = cell2mat (puncture_times);
+    puncture_times = puncture_times (trialID, :);
+    
+    %create binary features  
+    temp = zeros (size(features,1), length(puncture_times));
+    for i = 1: length(puncture_times)
+        temp ((targetFramerate*puncture_times(i)+1):end,i)=1;
+    end
+    features = horzcat (features, temp);
+ 
 end

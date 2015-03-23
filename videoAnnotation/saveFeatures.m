@@ -23,6 +23,22 @@ originalFramerate = 30;
 interpolate = 1; %no need for interpolation here
 targetFramerate = 30; %frames per second
 
+%% Read the csv file for times
+% filename = 'suturing-times.csv';
+% endRow = 39;%no of trials
+% formatSpec = '%s%f%f%f%f%f%f%f%f%[^\n\r]';
+% 
+% fileID = fopen(filename,'r');
+% dataArray = textscan(fileID, formatSpec, endRow, 'Delimiter', ',', 'ReturnOnError', false);
+% fclose(fileID);
+% 
+% namedTrails = dataArray{:, 1};
+% puncture_times = dataArray(:, 2:9);
+% puncture_times = cell2mat (puncture_times);
+% 
+% % Clear temporary variables
+% clearvars filename delimiter endRow formatSpec fileID ans;
+
 %% loop through all the the existing annotations 
 for l = 1: length(annotationNames)    
     %save all files
