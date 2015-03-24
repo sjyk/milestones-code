@@ -132,6 +132,13 @@ if ~isempty(strfind(inputFileName, 'suturing'))
     features= addPunctureTime (inputFileName, features, originalFramerate);
 end
 
+% Note-Some Videos in G and F series are of smaller res. so the features need proper 
+% re-scaling (lossy video converion using Handbrake--see README)
+if features(1,2)<320
+    features(:,2:5) = features(:,2:5).*2; 
+end
+
+
 % save the features as mat file
 if outputFlag && ~isnan(outputFileName(1)) 
     save (outputFileName, 'features');
