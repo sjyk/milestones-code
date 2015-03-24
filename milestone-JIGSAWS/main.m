@@ -16,6 +16,13 @@ end
 
 
 %% Load all the kinematics data
+% 1-3    (3) : tooltip xyz                    
+% 4-12   (9) : tooltip R    
+% 13-15  (3) : tooltip trans vel x', y', z'   
+% 16-18  (3) : tooltip rot_vel                
+% 19     (1) : gripper angle   
+% and then repeated for the other arm
+
 kinematicsDir = ['..' filesep 'data' filesep 'SU-kinematics' filesep...
     'kinematics' filesep 'AllGestures'];
 kinematicsNames = dir(fullfile(kinematicsDir,'*.txt'));
@@ -23,7 +30,7 @@ kinematicsNames = {kinematicsNames.name}';
 
 for l = 1: length(kinematicsNames) 
 kinematics = readKinematics(fullfile(kinematicsDir,kinematicsNames{l}));    
-trial_kinematics{l} = kinematics;
+trial_kinematics{l} = kinematics(39:76); %only the Slave coordinates. No Master
 end
 
 %% get indices for which annotations are present
@@ -54,8 +61,19 @@ for l = 1: length(annotationNames)
     end
 end
 
-%% Cluster only visual features, then cluster in time
+%put all the data into one big matrix
 
+%% Cluster only in visual features, then cluster in time
+
+%whiten (try whitening both before and after)
+
+%get ChangePoints
+
+%run clustering
+
+%get intrinsic dimension of the data
+
+%plot clustering results in t-SNE
 
 
 %% Cluster only time, then cluster in visual features
