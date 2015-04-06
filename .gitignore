@@ -6,3 +6,4 @@ videoAnnotation/data/labels-needle-bbox-session/*
 data/SU-kinematics/*
 videoAnnotation/jhu alias
 *.m~
+*.mat
