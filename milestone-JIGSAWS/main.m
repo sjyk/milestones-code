@@ -14,7 +14,6 @@ feat = load (fullfile(annotationDir,annotationNames{l}));
 trial{l}{1} = feat.features;
 end
 
-
 %% Load all the kinematics data
 % 1-3    (3) : tooltip xyz                    
 % 4-12   (9) : tooltip R    
@@ -69,7 +68,13 @@ end
 
 %get ChangePoints
 
-%run clustering
+%% Run DTW between segments to cull out re-attempts
+
+% add cbdtw to the path
+
+
+
+%% run clustering again on state space
 
 %get intrinsic dimension of the data
 
@@ -77,7 +82,6 @@ end
 
 
 %% Cluster only time, then cluster in visual features
-
 
 
 %% Cluster only visual features+robot positions , then cluster in time
